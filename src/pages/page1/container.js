@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import nj from 'nornj';
 import { registerTmpl } from 'nornj-react';
 import '../../common/containerConfig';
@@ -10,33 +10,27 @@ import { Message } from 'flarej/lib/components/antd/message';
 import { autobind } from 'core-decorators';
 import '../../components/header';
 import '../../components/sider';
+import ContainerHoc from '../../components/higherOrders/container';
 import styles from './page1.m.less';
 import tmpls from './page1.t.html';
 import Page1Store from '../../stores/Page1Store';
 const page1Store = new Page1Store();
 
 //页面容器组件
+@inject('store')
 @observer
-@registerTmpl('Container')
 class Container extends Component {
-  componentDidMount() {
-    //删除加载loading层
-    $('#vic_loading_main').remove();
-    $('#vic_loading-mask_main').fadeOut(200, function() {
-      $(this).remove();
-    });
-  }
-
   render() {
     return this.props.tmpls[0](this, {
-      styles,
-      page1Store
+      styles
     });
   }
 }
+ContainerHoc('Container', Container, page1Store);
 
-@observer
 @registerTmpl('vicb-DataTable')
+@inject('store')
+@observer
 class DataTable extends Component {
   state = {
     columns: [{
@@ -118,13 +112,9 @@ class DataTable extends Component {
   };
 
   @autobind
-  onPageChange(pageIndex, pageSize, isInit) {
-    // if (isInit) {
-    //   return;
-    // }
-    
+  onPageChange(page, pageSize, isInit) {
     const closeLoading = Message.loading('正在加载数据...', 0);
-    this.props.store.getTableData(pageIndex, pageSize).then(() => closeLoading());
+    this.props.store.getTableData(page, pageSize).then(() => closeLoading());
   }
 
   render() {

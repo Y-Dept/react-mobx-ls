@@ -5,12 +5,12 @@
                 showDataFilter={true}
                 :tableProps="{
                   size: 'middle',
-                  rowKey: 'vendorCode'
+                  rowKey: 'test1'
                 }"
                 {columns}
                 {rowSelection}
                 {onPageChange}
-                data={store.tableData}
+                data={toJS(store.tableData)}
                 count={store.count}
                 pageIndex={store.pageIndex}
                 pageSize={store.pageSize} />

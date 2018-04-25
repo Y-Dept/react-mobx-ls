@@ -5,13 +5,8 @@ import 'vic-common/resources/styles/base.less';
 import 'vic-common/resources/styles/resetLsStyle.less';
 import '../../resources/styles/base.less';
 import 'vic-common/lib/common/base';
-import { toJS } from 'mobx';
 import nj, { registerFilter, registerExtension } from 'nornj';
 import 'nornj-react/mobx';
-
-registerFilter('toJS', (v) => {
-  return toJS(v);
-});
 
 registerExtension({
   cif: {

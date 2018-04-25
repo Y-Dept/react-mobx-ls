@@ -155,7 +155,8 @@ module.exports = function(webpack, config, isProd, useWatch, useHmr) {
             loader: 'nornj-loader',
             options: {
               outputH: true,
-              delimiters: 'react'
+              delimiters: 'react',
+              extensionConfig: require('nornj-react/mobx/extensionConfig')
             }
           }]
         },
